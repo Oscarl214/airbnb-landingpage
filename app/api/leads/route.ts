@@ -1,14 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
-
-// ----------------------------------------------------------------
-// Future: Email integration
-// After a successful lead insert, send a welcome email with the
-// checklist PDF attached. See lib/email.ts for the placeholder.
-//
-// import { sendWelcomeEmail } from "@/lib/email";
-// await sendWelcomeEmail({ name, email });
-// ----------------------------------------------------------------
+import { sendWelcomeEmail } from "@/lib/email";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ZIP_REGEX = /^[0-9]{5}$/;
@@ -68,8 +60,13 @@ export async function POST(request: Request) {
       );
     }
 
-    // Future: send welcome email here
-    // await sendWelcomeEmail({ name, email });
+    // Send welcome email with PDF attached
+    try {
+      await sendWelcomeEmail({ name: name.trim(), email: email.trim().toLowerCase() });
+    } catch (emailErr) {
+      // Log but don't fail the request — lead is already saved
+      console.error("Email send error:", emailErr);
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
