@@ -20,7 +20,7 @@ export async function sendWelcomeEmail({ name, email }: { name: string; email: s
   const pdfBuffer = await pdfResponse.arrayBuffer();
 
   await resend.emails.send({
-    from: 'Dallas Airbnb Cleaning <hello@yourdomain.com>',
+    from: 'Dallas Airbnb Cleaning <info@dallashostchecklist.com/>',
     to: email,
     subject: 'Your Airbnb Cleaning Checklist + Pricing Guide',
     html: `
