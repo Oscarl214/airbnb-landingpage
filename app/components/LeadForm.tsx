@@ -10,6 +10,8 @@ export default function LeadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
+
+  ///adding a comment
   const [form, setForm] = useState({
     name: "",
     email: "",
